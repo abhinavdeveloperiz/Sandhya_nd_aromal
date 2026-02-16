@@ -1,9 +1,46 @@
 from django.contrib import admin
-from .models import Gallery, Sandhya, Aromal,Banner,Audio
-# Register your models here.
+from django.utils.html import format_html
+from .models import Banner, Audio, Gallery, Sandhya, Aromal
 
-admin.site.register(Gallery)
-admin.site.register(Sandhya)
-admin.site.register(Aromal)
-admin.site.register(Banner)
-admin.site.register(Audio)
+
+# reusable preview function
+class ImagePreviewAdmin(admin.ModelAdmin):
+    list_display = ('id', 'preview')
+    readonly_fields = ('preview',)
+    ordering = ('-id',)
+
+    def preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" width="80" style="border-radius:6px;" />',
+                obj.image.url
+            )
+        return "No Image"
+
+    preview.short_description = "Preview"
+
+
+@admin.register(Banner)
+class BannerAdmin(ImagePreviewAdmin):
+    pass
+
+
+@admin.register(Gallery)
+class GalleryAdmin(ImagePreviewAdmin):
+    pass
+
+
+@admin.register(Sandhya)
+class SandhyaAdmin(ImagePreviewAdmin):
+    pass
+
+
+@admin.register(Aromal)
+class AromalAdmin(ImagePreviewAdmin):
+    pass
+
+
+@admin.register(Audio)
+class AudioAdmin(admin.ModelAdmin):
+    list_display = ('id', 'file')
+    ordering = ('-id',)
