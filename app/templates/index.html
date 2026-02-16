@@ -116,16 +116,8 @@
 
 <body>
 
-
-    <!-- Music Toggle Button -->
-    <button id="musicToggle" class="fixed bottom-6 right-6 bg-[#7a1f1f] text-white w-14 h-14 flex items-center justify-center
-           rounded-full shadow-lg z-50 text-xl hover:scale-110 transition">
-
-        <i id="musicIcon" class="fa-solid fa-volume-high"></i>
-    </button>
-
-    <!-- Audio -->
-    <audio id="weddingMusic" loop>
+    <!-- Background Wedding Music -->
+    <audio id="weddingMusic" autoplay loop>
         <source src="{{ audio.file.url }}" type="audio/mpeg">
     </audio>
 
@@ -133,39 +125,24 @@
         document.addEventListener("DOMContentLoaded", function () {
 
             const music = document.getElementById("weddingMusic");
-            const btn = document.getElementById("musicToggle");
-            const icon = document.getElementById("musicIcon");
 
-            // Start with soft volume
+            // set pleasant volume
             music.volume = 0.6;
 
-            function playMusic() {
-                music.play().then(() => {
-                    icon.classList.remove("fa-volume-xmark");
-                    icon.classList.add("fa-volume-high");
-                }).catch(() => { });
+            function startMusic() {
+                music.play().catch(() => { });
             }
 
-            // Attempt autoplay
-            playMusic();
+            // attempt autoplay
+            startMusic();
 
-            // If blocked, play on first interaction
-            document.addEventListener("click", playMusic, { once: true });
-            document.addEventListener("touchstart", playMusic, { once: true });
-
-            // Toggle button
-            btn.onclick = () => {
-                if (music.paused) {
-                    music.play();
-                    icon.classList.replace("fa-volume-xmark", "fa-volume-high");
-                } else {
-                    music.pause();
-                    icon.classList.replace("fa-volume-high", "fa-volume-xmark");
-                }
-            };
+            // if browser blocks autoplay → start on first interaction
+            document.addEventListener("click", startMusic, { once: true });
+            document.addEventListener("touchstart", startMusic, { once: true });
 
         });
     </script>
+
 
 
 
