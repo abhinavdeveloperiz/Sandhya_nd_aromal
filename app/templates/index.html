@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sandhya & Aromal Wedding</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fffaf5;
+            overflow-x: hidden;
+        }
+
+        .heading {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .malayalam {
+            font-family: 'Manjari', sans-serif;
+        }
+
+        /* ✨ glowing particles */
+        .sparkle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: #ffd700;
+            border-radius: 50%;
+            opacity: .7;
+            animation: floatSpark 12s linear infinite;
+        }
+
+        @keyframes floatSpark {
+            from {
+                transform: translateY(100vh) scale(0);
+            }
+
+            to {
+                transform: translateY(-10vh) scale(1);
+            }
+        }
+
+        /* 🌸 falling petals */
+        .petal {
+            position: fixed;
+            top: -10px;
+            width: 18px;
+            height: 18px;
+            background: radial-gradient(circle at 30% 30%, #ffb6c1, #ff4d6d);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(45deg);
+            opacity: .85;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+
+        /* hero zoom */
+        .hero-bg {
+            animation: slowZoom 30s ease-in-out infinite alternate;
+        }
+
+        @keyframes slowZoom {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.12);
+            }
+        }
+
+        /* glowing hover */
+        .glow:hover {
+            box-shadow: 0 0 25px rgba(196, 155, 58, 0.6);
+            transform: translateY(-6px);
+            transition: .4s;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- Music Toggle Button -->
+    <button id="musicToggle" class="fixed bottom-6 right-6 bg-[#7a1f1f] text-white w-14 h-14 flex items-center justify-center
+           rounded-full shadow-lg z-50 text-xl hover:scale-110 transition">
+
+        <i id="musicIcon" class="fa-solid fa-volume-high"></i>
+    </button>
+
+    <!-- Audio -->
+    <audio id="weddingMusic" loop>
+        <source src="{{ audio.file.url }}" type="audio/mpeg">
+    </audio>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const music = document.getElementById("weddingMusic");
+            const btn = document.getElementById("musicToggle");
+            const icon = document.getElementById("musicIcon");
+
+            // Start with soft volume
+            music.volume = 0.6;
+
+            function playMusic() {
+                music.play().then(() => {
+                    icon.classList.remove("fa-volume-xmark");
+                    icon.classList.add("fa-volume-high");
+                }).catch(() => { });
+            }
+
+            // Attempt autoplay
+            playMusic();
+
+            // If blocked, play on first interaction
+            document.addEventListener("click", playMusic, { once: true });
+            document.addEventListener("touchstart", playMusic, { once: true });
+
+            // Toggle button
+            btn.onclick = () => {
+                if (music.paused) {
+                    music.play();
+                    icon.classList.replace("fa-volume-xmark", "fa-volume-high");
+                } else {
+                    music.pause();
+                    icon.classList.replace("fa-volume-high", "fa-volume-xmark");
+                }
+            };
+
+        });
+    </script>
+
+
+
+
+
+    <!-- 🌸 PETALS -->
+    <script>
+        for (let i = 0; i < 20; i++) {
+            let p = document.createElement("div");
+            p.className = "petal";
+            p.style.left = Math.random() * 100 + "vw";
+            p.style.animationDuration = (5 + Math.random() * 8) + "s";
+            document.body.appendChild(p);
+        }
+    </script>
+
+    <!-- ✨ SPARKLES -->
+    <script>
+        for (let i = 0; i < 25; i++) {
+            let s = document.createElement("div");
+            s.className = "sparkle";
+            s.style.left = Math.random() * 100 + "vw";
+            s.style.animationDuration = (8 + Math.random() * 10) + "s";
+            document.body.appendChild(s);
+        }
+    </script>
+
+    <!-- HERO -->
+    <section
+        class="relative h-[75vh] md:h-[100vh] flex items-center justify-center text-center text-white overflow-hidden">
+
+        <div class="absolute inset-0 hero-bg">
+            <img src="{{ banner.image.url }}" class="w-full h-full object-cover">
+        </div>
+
+        <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60"></div>
+
+        <div class="relative z-10 px-6">
+            <h1 class="heading text-4xl md:text-6xl text-[#f7e7b0] drop-shadow-xl" data-aos="fade-down">
+                Sandhya & Aromal
+            </h1>
+
+            <p class="mt-4 text-xl text-white/90" data-aos="fade-up">
+                Together with their families invite you to celebrate love
+            </p>
+        </div>
+
+    </section>
+
+    <!-- COUPLE -->
+    <section class="max-w-6xl mx-auto py-16 px-6 grid md:grid-cols-2 gap-12 items-center"> <!-- Bride -->
+        <div class="text-center" data-aos="fade-right">
+            <div
+                class="w-full max-w-sm mx-auto h-[420px] sm:h-[480px] md:h-[520px] overflow-hidden rounded-2xl shadow-xl">
+                <img src="{{ sandhya.image.url }}" class="w-full h-full object-cover object-top">
+            </div>
+            <h2 class="heading text-3xl mt-6 text-[#7a1f1f]">Sandhya S</h2>
+            <p class="text-gray-600 mt-2 leading-relaxed"> Daughter of Late G. Vignesh Achari & S. Sindhu<br>
+                Sreekrishna Mandiram, Kankod P.O.<br> Kalluvayal, Kollam </p>
+        </div> <!-- Groom -->
+        <div class="text-center" data-aos="fade-left">
+            <div
+                class="w-full max-w-sm mx-auto h-[420px] sm:h-[480px] md:h-[520px] overflow-hidden rounded-2xl shadow-xl">
+                <img src="{{ aromal.image.url }}" class="w-full h-full object-cover object-top">
+            </div>
+            <h2 class="heading text-3xl mt-6 text-[#7a1f1f]">Aromal Chandran</h2>
+            <p class="text-gray-600 mt-2 leading-relaxed"> Son of Late Chandran Pillai & Smt. Shobha Chandran<br>
+                Sreekandam, Idayur<br> Chirakkara P.O., Kollam </p>
+        </div>
+    </section>
+
+    <!-- DETAILS -->
+    <section class="bg-[#fff3e6] py-20 text-center px-1">
+        <h2 class="heading text-4xl text-[#7a1f1f]" data-aos="fade-up">Wedding Celebration</h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-10 mt-12">
+
+            <div data-aos="zoom-in">
+                <i class="fa-solid fa-calendar text-5xl text-[#c49b3a]"></i>
+                <p class="mt-4 font-semibold text-lg">March 20, 2026</p>
+            </div>
+
+            <div data-aos="zoom-in">
+                <i class="fa-solid fa-location-dot text-5xl text-[#c49b3a]"></i>
+                <p class="mt-4 font-semibold text-lg">Empire Convention Center</p>
+            </div>
+
+            <div data-aos="zoom-in">
+                <i class="fa-solid fa-clock text-5xl text-[#c49b3a]"></i>
+                <p class="mt-4 font-semibold text-lg">10:00 AM</p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section class="bg-[#fff3e6] py-20 text-center px-1">
+        <h2 class="heading text-4xl text-[#7a1f1f]" data-aos="fade-up">Reception</h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-10 mt-12">
+
+            <div data-aos="zoom-in">
+                <i class="fa-solid fa-calendar text-5xl text-[#c49b3a]"></i>
+                <p class="mt-4 font-semibold text-lg">March 20, 2026</p>
+            </div>
+
+            <div data-aos="zoom-in">
+                <i class="fa-solid fa-location-dot text-5xl text-[#c49b3a]"></i>
+                <p class="mt-4 font-semibold text-lg">Empire Convention Center</p>
+            </div>
+
+            <div data-aos="zoom-in">
+                <i class="fa-solid fa-clock text-5xl text-[#c49b3a]"></i>
+                <p class="mt-4 font-semibold text-lg">03:00 pm</p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- GALLERY -->
+    <section class="max-w-7xl mx-auto py-20 px-6">
+        <h2 class="heading text-4xl text-center text-[#7a1f1f]" data-aos="fade-up">Wedding Gallery</h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-12">
+
+            {% for img in gallery %}
+            <div class="overflow-hidden rounded-xl shadow-md glow" data-aos="zoom-in">
+                <img src="{{ img.image.url }}" class="w-full h-72 object-cover hover:scale-110 transition duration-700">
+            </div>
+            {% endfor %}
+
+        </div>
+    </section>
+
+    <!-- MAP -->
+    <section class="bg-[#fff3e6] py-16 text-center px-4">
+        <h2 class="heading text-4xl text-[#7a1f1f]">Venue</h2>
+        <div class="mt-8 max-w-4xl mx-auto">
+            <iframe class="w-full h-72 rounded-xl shadow-xl"
+                src="https://maps.google.com/maps?q=Empire%20Convention%20Center%20Chathannur&t=&z=13&ie=UTF8&iwloc=&output=embed">
+            </iframe>
+        </div>
+    </section>
+
+    <footer class="relative bg-[#7a1f1f] text-white text-center py-20 px-6">
+
+        <!-- Decorative Top Divider -->
+        <div class="absolute top-0 left-0 w-full overflow-hidden leading-none">
+            <svg viewBox="0 0 500 40" class="w-full h-10 text-[#fffaf5]" preserveAspectRatio="none">
+                <path d="M0,40 C150,0 350,0 500,40 L500,0 L0,0 Z" fill="currentColor"></path>
+            </svg>
+        </div>
+
+        <p class="text-lg tracking-widest uppercase text-[#f7e7b0] mb-4">
+            With Love & Blessings
+        </p>
+
+        <h2 class="heading text-4xl md:text-5xl text-[#f7e7b0] drop-shadow-lg">
+            Sandhya ♥ Aromal
+        </h2>
+
+        <p class="mt-6 text-white/80 max-w-xl mx-auto">
+            Thank you for being part of our special day and sharing the joy of our wedding celebration.
+        </p>
+
+        <!-- Decorative Icons -->
+        <div class="flex justify-center gap-6 mt-8 text-[#f7e7b0] text-2xl">
+            <i class="fa-solid fa-ring"></i>
+        </div>
+
+    </footer>
+
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1200, once: true });
+    </script>
+
+</body>
+
+</html>
