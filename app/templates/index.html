@@ -116,32 +116,34 @@
 
 <body>
 
-    <!-- Background Wedding Music -->
-    <audio id="weddingMusic" autoplay loop>
-        <source src="{{ audio.file.url }}" type="audio/mpeg">
-    </audio>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
 
-            const music = document.getElementById("weddingMusic");
 
-            // set pleasant volume
-            music.volume = 0.6;
+{% if audio %}
+<audio id="bg-audio" autoplay loop muted>
+    <source src="{{ audio.file.url }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+{% endif %}
 
-            function startMusic() {
-                music.play().catch(() => { });
-            }
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const audio = document.getElementById("bg-audio");
 
-            // attempt autoplay
-            startMusic();
-
-            // if browser blocks autoplay → start on first interaction
-            document.addEventListener("click", startMusic, { once: true });
-            document.addEventListener("touchstart", startMusic, { once: true });
-
+    if (audio) {
+        // attempt autoplay
+        audio.play().catch(() => {
+            console.log("Autoplay blocked by browser.");
         });
-    </script>
+
+        // unmute after first user interaction (required by browsers)
+        document.addEventListener("click", () => {
+            audio.muted = false;
+            audio.play();
+        }, { once: true });
+    }
+});
+</script>
 
 
 
@@ -215,48 +217,71 @@
     </section>
 
     <!-- DETAILS -->
-    <section class="bg-[#fff3e6] py-20 text-center px-1">
-        <h2 class="heading text-4xl text-[#7a1f1f]" data-aos="fade-up">Wedding Celebration</h2>
+    <section class="bg-[#fff3e6] py-20 text-center px-4">
+        <h2 class="heading text-4xl text-[#7a1f1f]" data-aos="fade-up">
+            Wedding Celebration
+        </h2>
 
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-10 mt-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-12 max-w-4xl mx-auto">
 
-            <div data-aos="zoom-in">
-                <i class="fa-solid fa-calendar text-5xl text-[#c49b3a]"></i>
-                <p class="mt-4 font-semibold text-lg">March 20, 2026</p>
+            <!-- Date -->
+            <div class="flex items-center gap-5 justify-left md:justify-start ml-12" data-aos="zoom-in">
+                <i class="fa-solid fa-calendar text-4xl text-[#c49b3a]"></i>
+                <p class="font-semibold text-lg text-left">
+                    March 20, 2026
+                </p>
             </div>
 
-            <div data-aos="zoom-in">
-                <i class="fa-solid fa-location-dot text-5xl text-[#c49b3a]"></i>
-                <p class="mt-4 font-semibold text-lg">Empire Convention Center</p>
+            <!-- Venue -->
+            <div class="flex items-center gap-5 justify-left md:justify-start ml-12" data-aos="zoom-in">
+                <i class="fa-solid fa-location-dot text-4xl text-[#c49b3a]"></i>
+                <p class="font-semibold text-lg text-left">
+                    Empire Convention Center
+                </p>
             </div>
 
-            <div data-aos="zoom-in">
-                <i class="fa-solid fa-clock text-5xl text-[#c49b3a]"></i>
-                <p class="mt-4 font-semibold text-lg">10:00 AM</p>
+            <!-- Time -->
+            <div class="flex items-center gap-5 justify-left md:justify-start ml-12" data-aos="zoom-in">
+                <i class="fa-solid fa-clock text-4xl text-[#c49b3a]"></i>
+                <p class="font-semibold text-lg text-left">
+                    10:00 AM
+                </p>
             </div>
 
         </div>
     </section>
 
 
-    <section class="bg-[#fff3e6] py-20 text-center px-1">
-        <h2 class="heading text-4xl text-[#7a1f1f]" data-aos="fade-up">Reception</h2>
 
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-10 mt-12">
+    <section class="bg-[#fff3e6] py-20 text-center px-4">
+        <h2 class="heading text-4xl text-[#7a1f1f]" data-aos="fade-up">
+            Reception
+        </h2>
 
-            <div data-aos="zoom-in">
-                <i class="fa-solid fa-calendar text-5xl text-[#c49b3a]"></i>
-                <p class="mt-4 font-semibold text-lg">March 20, 2026</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-12 max-w-4xl mx-auto">
+
+            <!-- Date -->
+            <div class="flex items-center gap-5 justify-left md:justify-start ml-12" data-aos="zoom-in">
+                <i class="fa-solid fa-calendar text-4xl text-[#c49b3a]"></i>
+                <p class="font-semibold text-lg text-left">
+                    March 20, 2026
+                </p>
             </div>
 
-            <div data-aos="zoom-in">
-                <i class="fa-solid fa-location-dot text-5xl text-[#c49b3a]"></i>
-                <p class="mt-4 font-semibold text-lg">Empire Convention Center</p>
+            <!-- Venue -->
+            <div class="flex items-center gap-5 justify-left md:justify-start ml-12" data-aos="zoom-in">
+                <i class="fa-solid fa-location-dot text-4xl text-[#c49b3a]"></i>
+                <p class="font-semibold text-lg text-left">
+                    Empire Convention Center
+                </p>
             </div>
 
-            <div data-aos="zoom-in">
-                <i class="fa-solid fa-clock text-5xl text-[#c49b3a]"></i>
-                <p class="mt-4 font-semibold text-lg">03:00 pm</p>
+            <!-- Time -->
+            <div class="flex items-center gap-5 justify-left md:justify-start ml-12" data-aos="zoom-in">
+                <i class="fa-solid fa-clock text-4xl text-[#c49b3a]"></i>
+                <p class="font-semibold text-lg text-left">
+                    03:00 PM
+                </p>
             </div>
 
         </div>
